@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using InstallReceipt.Classification;
 using InstallReceipt.Core.Models;
 using InstallReceipt.Core.Persistence;
@@ -26,6 +27,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ApplyTheme(useDarkMode: false);
+    }
+
+    private void DarkModeToggle_Changed(object sender, RoutedEventArgs e)
+    {
+        ApplyTheme(DarkModeToggle.IsChecked == true);
     }
 
     private async void CaptureBefore_Click(object sender, RoutedEventArgs e)
@@ -245,6 +252,38 @@ public partial class MainWindow : Window
         ExportJsonButton.IsEnabled = canExport;
         ExportHtmlButton.IsEnabled = canExport;
         ExportMarkdownButton.IsEnabled = canExport;
+    }
+
+    private void ApplyTheme(bool useDarkMode)
+    {
+        if (useDarkMode)
+        {
+            SetThemeBrush("AppBackgroundBrush", "#101214");
+            SetThemeBrush("PanelBackgroundBrush", "#171A1D");
+            SetThemeBrush("PanelBorderBrush", "#2A2F35");
+            SetThemeBrush("PrimaryTextBrush", "#F3F4F6");
+            SetThemeBrush("SecondaryTextBrush", "#A9B1BA");
+            SetThemeBrush("InputBackgroundBrush", "#111417");
+            SetThemeBrush("InputBorderBrush", "#3A4149");
+            SetThemeBrush("ButtonBackgroundBrush", "#202428");
+            SetThemeBrush("ListHeaderBackgroundBrush", "#202428");
+            return;
+        }
+
+        SetThemeBrush("AppBackgroundBrush", "#F6F7F8");
+        SetThemeBrush("PanelBackgroundBrush", "#FFFFFF");
+        SetThemeBrush("PanelBorderBrush", "#D8DEE4");
+        SetThemeBrush("PrimaryTextBrush", "#1F2328");
+        SetThemeBrush("SecondaryTextBrush", "#57606A");
+        SetThemeBrush("InputBackgroundBrush", "#FFFFFF");
+        SetThemeBrush("InputBorderBrush", "#D0D7DE");
+        SetThemeBrush("ButtonBackgroundBrush", "#FFFFFF");
+        SetThemeBrush("ListHeaderBackgroundBrush", "#F6F8FA");
+    }
+
+    private void SetThemeBrush(string resourceKey, string color)
+    {
+        Resources[resourceKey] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
     }
 
     private static string ToJapanese(AttentionLevel level)
