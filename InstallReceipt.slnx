@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/InstallReceipt.App/InstallReceipt.App.csproj" />
+    <Project Path="src/InstallReceipt.Classification/InstallReceipt.Classification.csproj" />
+    <Project Path="src/InstallReceipt.Core/InstallReceipt.Core.csproj" />
+    <Project Path="src/InstallReceipt.Diff/InstallReceipt.Diff.csproj" />
+    <Project Path="src/InstallReceipt.Platform.Windows/InstallReceipt.Platform.Windows.csproj" />
+    <Project Path="src/InstallReceipt.Rendering/InstallReceipt.Rendering.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InstallReceipt.Tests/InstallReceipt.Tests.csproj" />
+  </Folder>
+</Solution>

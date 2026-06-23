@@ -440,23 +440,73 @@ install-receipt/
    └─ snapshots/
 ```
 
+## MVP Implementation
+
+This repository now contains a Windows MVP implemented with C# / .NET / WPF.
+
+### Build
+
+```powershell
+dotnet build InstallReceipt.slnx -m:1
+```
+
+The local .NET 10 SDK environment used during development returned intermittent restore failures when MSBuild ran the project graph in parallel. Use `-m:1` for reliable local builds.
+
+### Run in development
+
+```powershell
+dotnet build src\InstallReceipt.App\InstallReceipt.App.csproj -m:1
+dotnet run --project src\InstallReceipt.App\InstallReceipt.App.csproj --no-build
+```
+
+### Publish for Windows x64
+
+```powershell
+dotnet publish src\InstallReceipt.App\InstallReceipt.App.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=false -m:1
+```
+
+Published executable:
+
+```text
+src\InstallReceipt.App\bin\Release\net10.0-windows\win-x64\publish\InstallReceipt.App.exe
+```
+
+This is a framework-dependent build and expects the .NET 10 Windows Desktop Runtime to be installed.
+
+### Test
+
+```powershell
+dotnet build tests\InstallReceipt.Tests\InstallReceipt.Tests.csproj -m:1
+dotnet run --project tests\InstallReceipt.Tests\InstallReceipt.Tests.csproj --no-build
+```
+
 ## Development Status
 
-This project is currently in the planning / MVP design stage.
+This project has a local Windows MVP implementation. The roadmap below describes planned improvements beyond the current MVP.
 
 Initial implementation goals:
 
-- [ ] Create snapshot model
-- [ ] Implement file scanner
-- [ ] Implement registry scanner for startup and uninstall entries
-- [ ] Implement service scanner
-- [ ] Implement scheduled task scanner
-- [ ] Implement diff engine
-- [ ] Implement rule-based classifier
-- [ ] Implement receipt renderer
-- [ ] Build minimal desktop UI
-- [ ] Add HTML export
-- [ ] Add JSON export
+- [x] Create snapshot model
+- [x] Implement file scanner
+- [x] Implement registry scanner for startup and uninstall entries
+- [x] Implement service scanner
+- [x] Implement scheduled task scanner
+- [x] Implement diff engine
+- [x] Implement rule-based classifier
+- [x] Implement receipt renderer
+- [x] Build minimal desktop UI
+- [x] Add HTML export
+- [x] Add JSON export
+- [x] Add Markdown export
+
+MVP implementation notes:
+
+- File scanning covers Program Files, Program Files (x86), ProgramData, AppData Roaming, AppData Local, and startup folders.
+- Registry scanning covers Run startup keys, uninstall entries, HKCU FileExts associations, and representative shell context menu keys.
+- Service scanning reads Win32 service metadata from `HKLM\SYSTEM\CurrentControlSet\Services`.
+- Scheduled task scanning reads task XML metadata from `C:\Windows\System32\Tasks`.
+- The app stores snapshots under `%LOCALAPPDATA%\InstallReceipt\snapshots` and exports receipts as JSON, HTML, or Markdown.
+- The MVP does not read file contents, upload data, perform AI judgment, delete items, or restore system state.
 
 ## Roadmap
 

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\InstallReceipt.Diff\InstallReceipt.Diff.csproj" />
+    <ProjectReference Include="..\InstallReceipt.Classification\InstallReceipt.Classification.csproj" />
+    <ProjectReference Include="..\InstallReceipt.Rendering\InstallReceipt.Rendering.csproj" />
+    <ProjectReference Include="..\InstallReceipt.Platform.Windows\InstallReceipt.Platform.Windows.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>
